@@ -4,6 +4,7 @@ import random
 import sys
 import datetime
 from envparse import env
+from urlparse import urlparse
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -78,6 +79,24 @@ DATABASES = {
         'PORT': env('DATABASE_PORT', default=None),
     }
 }
+
+database_url = env('DATABASE_URL', None)
+
+if database_url:
+    parsed = urlparse(database_url)
+
+    if parsed.scheme == 'sqlite':
+        DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+        DATABASES['default']['NAME'] = parsed.path
+    elif parsed.scheme == 'postgres':
+        DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+        DATABASES['default']['NAME'] = parsed.path.lstrip('/')
+        DATABASES['default']['USER'] = parsed.username
+        DATABASES['default']['PASSWORD'] = parsed.password
+        DATABASES['default']['HOST'] = parsed.hostname
+        DATABASES['default']['PORT'] = parsed.port or 5432
+    else:
+        raise Exception('Unsupported database scheme', parsed.scheme)
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
@@ -182,6 +201,7 @@ if DEBUG:
     EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
 else:
     EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'contact@lesspass.com')
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'localhost')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
