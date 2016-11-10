@@ -38,6 +38,11 @@ Then, create a new Heroku app:
 
     $ heroku create
 
+Configure the domain you'll use to access the service (for example,
+`my-less-pass.com`):
+
+    $ heroku config:set ALLOWED_HOSTS=my-less-pass.com
+
 Add a PostgreSQL resource to the Heroku app (it doesn't have to be the free
 plan, please refer to Heroku documentation for alternative plans):
 
@@ -49,7 +54,7 @@ Deploy the repository to the Heroku app:
 
 And finally, initialize the database:
 
-    $ git run sh init-db.sh
+    $ heroku run sh init-db.sh
 
 
 ## License
