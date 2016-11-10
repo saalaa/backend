@@ -4,7 +4,11 @@ import random
 import sys
 import datetime
 from envparse import env
-from urlparse import urlparse
+
+try:
+    from urlparse import urlparse
+except ImportError:
+    from urllib.parse import urlparse
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
