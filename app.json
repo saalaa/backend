@@ -1,0 +1,26 @@
+{
+  "name": "LessPass",
+  "description": "API server built with the Django REST framework for LessPass password manager",
+  "keywords": [
+    "password",
+    "manager"
+  ],
+  "website": "https://lesspass.com",
+  "repository": "https://github.com/saalaa/backend",
+  "logo": "https://d262ilb51hltx0.cloudfront.net/max/92/1*DsLOvN0-_hY84rv0MM08tg@2x.png",
+  "scripts": {
+    "postdeploy": "sh init-db.sh"
+  },
+  "env": {
+    "ALLOWED_HOSTS": {
+      "description": "The domain you'll use to access the service (for example, my-less-pass.com)"
+    },
+    "SECRET_KEY": {
+      "description": "A secret key for sessions handling",
+      "generator": "secret"
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ]
+}

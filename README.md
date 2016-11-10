@@ -31,7 +31,11 @@ Note that you might want to do this inside a virtual environment.
 
 ## Running on Heroku
 
-First, you should install the [Heroku
+The simplest is probably to use the following button:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/saalaa/backend)
+
+But you can do this manually too. First, you should install the [Heroku
 CLI](https://devcenter.heroku.com/articles/heroku-command-line).
 
 Then, create a new Heroku app:
